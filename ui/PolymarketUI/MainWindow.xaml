@@ -1,0 +1,139 @@
+<Window x:Class="PolymarketUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="clr-namespace:PolymarketUI.Views"
+        xmlns:conv="clr-namespace:PolymarketUI.Converters"
+        Title="Polymarket Trading Engine" Height="800" Width="1200"
+        WindowStartupLocation="CenterScreen" FontFamily="Segoe UI">
+    <Window.Resources>
+        <conv:BoolToColorConverter x:Key="ConnectedColor"/>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+    </Window.Resources>
+    <DockPanel>
+        <!-- Top Bar: Account + Engine + Connection -->
+        <Border DockPanel.Dock="Top" Background="#F0F0F0" Padding="8,4">
+            <WrapPanel Orientation="Horizontal">
+                <!-- Engine start/stop -->
+                <Button Content="Start Engine" Command="{Binding StartEngineCommand}"
+                        Width="100" Height="28" Margin="0,0,4,0" FontWeight="Bold" FontSize="12"
+                        Background="#2E7D32" Foreground="White"/>
+                <Button Content="Stop Engine" Command="{Binding StopEngineCommand}"
+                        Width="100" Height="28" Margin="0,0,8,0" FontWeight="Bold" FontSize="12"
+                        Background="#C62828" Foreground="White"/>
+
+                <!-- Separator -->
+                <Rectangle Width="1" Height="20" Fill="#CCCCCC" VerticalAlignment="Center" Margin="0,0,8,0"/>
+
+                <!-- WS connection -->
+                <TextBlock Text="Engine:" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <TextBox Text="{Binding ConnectionUri, UpdateSourceTrigger=PropertyChanged}"
+                         Width="160" VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <Button Content="Connect" Command="{Binding ConnectCommand}" Width="60" Margin="0,0,2,0"/>
+                <Button Content="Disconnect" Command="{Binding DisconnectCommand}" Width="72" Margin="0,0,4,0"/>
+                <Ellipse Width="12" Height="12" VerticalAlignment="Center" Margin="0,0,4,0"
+                         Fill="{Binding IsConnected, Converter={StaticResource ConnectedColor}}"/>
+
+
+            </WrapPanel>
+        </Border>
+
+        <!-- Rotation Status Bar -->
+        <Border DockPanel.Dock="Bottom" Background="#E8EAF6" Padding="8,3"
+                Visibility="{Binding RotationActive, Converter={StaticResource BoolToVis}}">
+            <WrapPanel Orientation="Horizontal">
+                <TextBlock Text="BTC 5M" FontWeight="Bold" FontFamily="Consolas" FontSize="11"
+                           VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <TextBlock Text="Market:" Foreground="#555" FontFamily="Consolas" FontSize="10"
+                           VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <TextBlock Text="{Binding RotationMarket}" FontFamily="Consolas" FontSize="10"
+                           VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <TextBlock Text="Window:" Foreground="#555" FontFamily="Consolas" FontSize="10"
+                           VerticalAlignment="Center" Margin="0,0,4,0"/>
+                <TextBlock Text="{Binding RotationTimeRemaining}" FontWeight="Bold"
+                           FontFamily="Consolas" FontSize="11"
+                           VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <TextBlock Text="{Binding RotationCount, StringFormat='Rotations: {0}'}"
+                           FontFamily="Consolas" FontSize="10" Foreground="#555"
+                           VerticalAlignment="Center" Margin="0,0,12,0"/>
+                <Border Background="#F44336" CornerRadius="3" Padding="6,1"
+                        Visibility="{Binding IsInNoTradeZone, Converter={StaticResource BoolToVis}}">
+                    <TextBlock Text="NO TRADE" Foreground="White" FontWeight="Bold"
+                               FontFamily="Consolas" FontSize="10" VerticalAlignment="Center"/>
+                </Border>
+            </WrapPanel>
+        </Border>
+
+        <!-- Status Bar -->
+        <Border DockPanel.Dock="Bottom" Background="#F8F8F8" Padding="8,2">
+            <TextBlock Text="{Binding StatusText}" FontFamily="Consolas" FontSize="10" Foreground="Gray"/>
+        </Border>
+
+        <!-- Main Content -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: Orders + Positions -->
+            <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <!-- Working Orders -->
+                    <views:WorkingOrdersView DataContext="{Binding WorkingOrders}"/>
+
+                    <!-- Positions -->
+                    <views:PositionsView DataContext="{Binding Positions}"/>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- Right: Control Panel + Account Panel + Market Picker + Metrics -->
+            <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <views:ControlPanelView DataContext="{Binding ControlPanel}"/>
+
+                    <!-- Account & PnL Panel -->
+                    <Border Background="White" BorderBrush="#DDD" BorderThickness="1" Margin="4,4" Padding="10,8" CornerRadius="4">
+                        <StackPanel>
+                            <TextBlock Text="Account" FontWeight="Bold" FontSize="13" Margin="0,0,0,8"/>
+
+                            <!-- USDC Balance -->
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="USDC" FontWeight="Bold" FontFamily="Consolas" FontSize="13"
+                                           Foreground="Black" Width="50" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding UsdcBalance}" FontFamily="Consolas" FontSize="13"
+                                           FontWeight="Bold" Foreground="#2E7D32" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Positions Value -->
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="Pos" FontWeight="Bold" FontFamily="Consolas" FontSize="13"
+                                           Foreground="Black" Width="50" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding PositionValue}" FontFamily="Consolas" FontSize="13"
+                                           FontWeight="Bold" Foreground="#1565C0" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- Realized PnL -->
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="PnL" FontWeight="Bold" FontFamily="Consolas" FontSize="13"
+                                           Foreground="Black" Width="50" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding RealizedPnl}" FontFamily="Consolas" FontSize="13"
+                                           FontWeight="Bold" Foreground="{Binding PnlColor}" VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!-- POL Gas Balance -->
+                            <StackPanel Orientation="Horizontal" Margin="0,2">
+                                <TextBlock Text="POL" FontWeight="Bold" FontFamily="Consolas" FontSize="13"
+                                           Foreground="Black" Width="50" VerticalAlignment="Center"/>
+                                <TextBlock Text="{Binding PolBalance}" FontFamily="Consolas" FontSize="13"
+                                           FontWeight="Bold" Foreground="#6A1B9A" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <views:MarketPickerView DataContext="{Binding MarketPicker}"/>
+                    <views:MetricsView DataContext="{Binding Metrics}"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </DockPanel>
+</Window>

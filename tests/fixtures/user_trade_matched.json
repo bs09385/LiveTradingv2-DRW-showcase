@@ -1,0 +1,14 @@
+{
+    "event_type": "trade",
+    "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "asset_id": "71321045679252212594626385532706912750332728571942532289631379312455583992563",
+    "market": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+    "status": "MATCHED",
+    "side": "BUY",
+    "price": "0.55",
+    "size": "50",
+    "taker_order_id": "0xabc123def456abc123def456abc123def456abc123def456abc123def456abc1",
+    "matchtime": "1700000010",
+    "last_update": "1700000010",
+    "timestamp": "1700000010"
+}

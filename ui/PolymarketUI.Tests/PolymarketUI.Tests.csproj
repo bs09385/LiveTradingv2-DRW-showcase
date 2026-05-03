@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <RootNamespace>PolymarketUI.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\PolymarketUI\Logic\LadderLogic.cs" Link="LadderLogic.cs" />
+    <Compile Include="..\PolymarketUI\Models\EngineSnapshot.cs" Link="EngineSnapshot.cs" />
+    <Compile Include="..\PolymarketUI\ViewModels\WorkingOrdersViewModel.cs" Link="WorkingOrdersViewModel.cs" />
+    <Compile Include="..\PolymarketUI\ViewModels\PositionsViewModel.cs" Link="PositionsViewModel.cs" />
+  </ItemGroup>
+
+</Project>

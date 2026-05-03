@@ -1,0 +1,32 @@
+{
+    "event_type": "trade",
+    "id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "asset_id": "71321045679252212594626385532706912750332728571942532289631379312455583992563",
+    "market": "0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+    "status": "MATCHED",
+    "side": "SELL",
+    "price": "0.55",
+    "size": "150",
+    "taker_order_id": "0xabc123def456abc123def456abc123def456abc123def456abc123def456abc1",
+    "matchtime": "1700000010",
+    "last_update": "1700000010",
+    "timestamp": "1700000010",
+    "maker_orders": [
+        {
+            "order_id": "0xmaker111222333444555666777888999aaabbbcccdddeeefffmaker111222333",
+            "matched_amount": "50",
+            "asset_id": "71321045679252212594626385532706912750332728571942532289631379312455583992563",
+            "outcome": "Yes",
+            "owner": "owner-uuid-1",
+            "price": "0.55"
+        },
+        {
+            "order_id": "0xmaker222333444555666777888999aaabbbcccdddeeefffmaker222333444555",
+            "matched_amount": "100",
+            "asset_id": "71321045679252212594626385532706912750332728571942532289631379312455583992563",
+            "outcome": "Yes",
+            "owner": "owner-uuid-2",
+            "price": "0.55"
+        }
+    ]
+}

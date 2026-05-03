@@ -1,0 +1,125 @@
+<UserControl x:Class="PolymarketUI.Views.LadderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Focusable="True"
+             PreviewMouseWheel="OnPreviewMouseWheel"
+             SizeChanged="OnSizeChanged">
+    <DockPanel>
+        <!-- Header -->
+        <Border DockPanel.Dock="Top" Background="#F0F0F0" Padding="8,4">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding SeriesKey}" FontWeight="Bold" FontSize="14"
+                               FontFamily="Consolas" Margin="0,0,8,0"/>
+                    <TextBlock Text="{Binding Status}" FontFamily="Consolas" FontSize="12"
+                               Foreground="DarkBlue" VerticalAlignment="Center"/>
+                </StackPanel>
+                <TextBlock FontFamily="Consolas" FontSize="12" Foreground="Gray">
+                    <Run Text="Cond: "/>
+                    <Run Text="{Binding ConditionId, Mode=OneWay}"/>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+
+        <!-- Footer -->
+        <Border DockPanel.Dock="Bottom" Background="#F8F8F8" Padding="8,2">
+            <StackPanel>
+                <TextBlock FontFamily="Consolas" FontSize="11" Foreground="Gray">
+                    <Run Text="Updated: "/>
+                    <Run Text="{Binding LastUpdateText, Mode=OneWay}"/>
+                    <Run Text="  |  Tick: "/>
+                    <Run Text="{Binding TickSizeText, Mode=OneWay}"/>
+                </TextBlock>
+                <TextBlock FontFamily="Consolas" FontSize="11" Foreground="Gray"
+                           Text="{Binding LevelCountText, Mode=OneWay}" TextTrimming="CharacterEllipsis"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Column Headers -->
+        <Border DockPanel.Dock="Top" BorderBrush="#CCC" BorderThickness="0,0,0,1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Bid Orders" FontFamily="Consolas" FontSize="13"
+                           FontWeight="Bold" HorizontalAlignment="Center" Padding="0,2"
+                           Foreground="#333"/>
+                <TextBlock Grid.Column="1" Text="Bid Vol" FontFamily="Consolas" FontSize="13"
+                           FontWeight="Bold" HorizontalAlignment="Center" Padding="0,2"
+                           Foreground="#333"/>
+                <TextBlock Grid.Column="2" Text="Price" FontFamily="Consolas" FontSize="13"
+                           FontWeight="Bold" HorizontalAlignment="Center" Padding="0,2"
+                           Foreground="#333"/>
+                <TextBlock Grid.Column="3" Text="Ask Vol" FontFamily="Consolas" FontSize="13"
+                           FontWeight="Bold" HorizontalAlignment="Center" Padding="0,2"
+                           Foreground="#333"/>
+                <TextBlock Grid.Column="4" Text="Ask Orders" FontFamily="Consolas" FontSize="13"
+                           FontWeight="Bold" HorizontalAlignment="Center" Padding="0,2"
+                           Foreground="#333"/>
+            </Grid>
+        </Border>
+
+        <!-- Ladder Rows -->
+        <ItemsControl x:Name="LadderItemsControl" ItemsSource="{Binding Rows}" Focusable="False">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid MinHeight="26">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Our bid orders (far left) -->
+                        <Border Grid.Column="0" Background="{Binding BidOrderBrush}"
+                                BorderBrush="#DDD" BorderThickness="0,0,1,1">
+                            <TextBlock Text="{Binding BidOrderStr}" FontFamily="Consolas"
+                                       FontSize="15" FontWeight="Bold" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center" Padding="4,0"/>
+                        </Border>
+
+                        <!-- Bid volume -->
+                        <Border Grid.Column="1" Background="{Binding BidBrush}"
+                                BorderBrush="#DDD" BorderThickness="0,0,1,1">
+                            <TextBlock Text="{Binding BuySizeStr}" FontFamily="Consolas"
+                                       FontSize="16" HorizontalAlignment="Right"
+                                       VerticalAlignment="Center" Padding="4,0"/>
+                        </Border>
+
+                        <!-- Price (center) -->
+                        <Border Grid.Column="2" Background="{Binding PriceBrush}"
+                                BorderBrush="#DDD" BorderThickness="0,0,1,1">
+                            <TextBlock Text="{Binding PriceStr}" FontFamily="Consolas"
+                                       FontSize="16" FontWeight="SemiBold"
+                                       Foreground="{Binding PriceForeground}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <!-- Ask volume -->
+                        <Border Grid.Column="3" Background="{Binding AskBrush}"
+                                BorderBrush="#DDD" BorderThickness="0,0,1,1">
+                            <TextBlock Text="{Binding SellSizeStr}" FontFamily="Consolas"
+                                       FontSize="16" HorizontalAlignment="Left"
+                                       VerticalAlignment="Center" Padding="4,0"/>
+                        </Border>
+
+                        <!-- Our ask orders (far right) -->
+                        <Border Grid.Column="4" Background="{Binding AskOrderBrush}"
+                                BorderBrush="#DDD" BorderThickness="0,0,0,1">
+                            <TextBlock Text="{Binding AskOrderStr}" FontFamily="Consolas"
+                                       FontSize="15" FontWeight="Bold" HorizontalAlignment="Left"
+                                       VerticalAlignment="Center" Padding="4,0"/>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </DockPanel>
+</UserControl>

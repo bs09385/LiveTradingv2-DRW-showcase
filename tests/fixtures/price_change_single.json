@@ -1,0 +1,15 @@
+{
+    "event_type": "price_change",
+    "market": "0x1234",
+    "timestamp": "1700000001",
+    "price_changes": [
+        {
+            "asset_id": "71321045679252212594626385532706912750332728571942532289631379312455583992563",
+            "best_bid": "0.52",
+            "best_ask": "0.53",
+            "changes": [
+                {"price": "0.52", "side": "BUY", "size": "150"}
+            ]
+        }
+    ]
+}

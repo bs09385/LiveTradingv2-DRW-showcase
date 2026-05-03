@@ -1,0 +1,16 @@
+[Unit]
+Description=Polymarket Trading Engine
+After=network-online.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/LiveTradingv2
+ExecStart=/home/ubuntu/LiveTradingv2/build/engine config/default.json accounts/main.json
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+Nice=-10
+
+[Install]
+WantedBy=multi-user.target
